@@ -64,7 +64,6 @@ while(x=="1" or x=="2"):
       print(films[a])
 
 
-
 mydb.commit()
 cursor.close()
 mydb.close()
