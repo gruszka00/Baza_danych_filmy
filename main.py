@@ -1,11 +1,18 @@
-# This is a sample Python script.
+import mysql.connector
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+mydb = mysql.connector.connect(
+  host='localhost',
+  user='root',
+  password='gerard_gruszka',
+  port='3306',
+  database='Films'
+)
 
+query= 'SELECT title, year from Films'
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+cursor = mydb.cursor()
+cursor.execute(query)
 
+for films in cursor:
+  print(films)
 
