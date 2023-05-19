@@ -17,7 +17,10 @@ class Film:
     self.year = year
 
   def __str__ (self):
-    return f"Filmy: id: {self.id} Title: {self.title} Year:{self.year}"
+    return f"Films: id: {self.id} Title: {self.title} Year:{self.year}"
+
+  def __repr__(self):
+    return str(self)
 
   def save(self):
     query = "SELECT * FROM Films WHERE id_film = " + str(self.id)
@@ -28,13 +31,6 @@ class Film:
      "'" + self.title + "', " \
      "'" + self.year + "') "
      cursor.execute(query)
-    else:
-      query = "UPDATE Films SET " \
-      "id_film = " + str(self.id) + ", " \
-      "title = '" + self.title + "', " \
-      "year = '" + self.year + "', " \
-      " WHERE id_film = " + str(self.id)
-      cursor.execute(query)
 
 
   def all():
@@ -45,15 +41,28 @@ class Film:
     return list
 
 def add(list, title, year):
-  list.append(Film(list[-1].id + 1, title, year))
+    list.append(Film(list[-1].id + 1, title, year))
+
+films = Film.all()
+
+x="1"
+while(x=="1" or x=="2"):
+  x = input("Instrukcja:\n"
+            "1-dodaj film\n"
+            "2-pokaż obecną bazę danych\n"
+            "inna liczba - wyłącz program\n")
+  if(x=="1"):
+    t=input("Podaj tytuł")
+    r=input("Podaj rok")
+    add(films, str(t), str(r))      ## przykładowe dodanie nowego filmu
+    films[-1].save()                ## dzięki temu zapisujemy zmiany w bazie danych na serwerze
 
 
+  if(x=="2"):
+    films = Film.all()
+    for a in range(len(films)):
+      print(films[a])
 
-
-filmy = Film.all()
-
-add(filmy,"Prestige","2010")
-filmy[-1].save()
 
 
 mydb.commit()
